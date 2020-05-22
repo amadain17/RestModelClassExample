@@ -18,6 +18,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 public class LombokDemoTest {
     private static final String TEST_URL = "https://postman-echo.com/post";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String ID_PATH = "data.id";
 
     @Test
     public void generateDifferentRequestBodyEveryTime() {
@@ -29,8 +31,8 @@ public class LombokDemoTest {
 
         Response response = sendPostRequest(dataFromModel, Collections.unmodifiableMap(headersFromModel));
 
-        assertThat(response.getHeader("Content-Type")).contains(APPLICATION_JSON.toString());
-        String id = response.getBody().jsonPath().get("data.id");
+        assertThat(response.getHeader(CONTENT_TYPE)).contains(APPLICATION_JSON.toString());
+        String id = response.getBody().jsonPath().get(ID_PATH);
         assertThat(id).isEqualTo(dataFromModel.getId());
     }
 
@@ -42,7 +44,7 @@ public class LombokDemoTest {
                     dataFromModel,
                     new ObjectMapper().convertValue(HeadersModel.builder().build(), new TypeReference<Map<String, Object>>() {
                     }));
-            String id = response.getBody().jsonPath().get("data.id");
+            String id = response.getBody().jsonPath().get(ID_PATH);
             assertThat(id).isEqualTo(dataFromModel.getId());
         });
     }
