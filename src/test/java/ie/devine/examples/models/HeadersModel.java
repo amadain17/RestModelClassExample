@@ -5,11 +5,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.restassured.http.ContentType;
 import lombok.Builder;
 import lombok.Data;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+
+import static ie.devine.examples.helpers.Randomizers.generateRandomString;
 
 @Builder
 @Data
@@ -23,9 +24,7 @@ public class HeadersModel {
     @Builder.Default String authorization = getBasicAuthorizationHeader();
 
     private static String getBasicAuthorizationHeader() {
-        String user = RandomStringUtils.random(8, true, false);
-        String password = RandomStringUtils.random(8, true, true);
-        String auth = user + ":" + password;
+        String auth = generateRandomString() + ":" + generateRandomString();
         byte[] encodedAuth = Base64.encodeBase64(
                 auth.getBytes(StandardCharsets.ISO_8859_1));
         return "Basic " + new String(encodedAuth);
