@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class Randomizers {
     public static String generateRandomCity() {
-        List<Pair> weights = Arrays.stream(Cities.values())
-                .map(city -> new Pair(city, city.getWeight()))
+        List<Pair<Cities, Double>> weights = Arrays.stream(Cities.values())
+                .map(city -> new Pair<>(city, city.getWeight()))
                 .collect(Collectors.toList());
 
-        EnumeratedDistribution distribution = new EnumeratedDistribution(weights);
-        return ((Cities) distribution.sample()).getDisplayName();
+        EnumeratedDistribution<Cities> distribution = new EnumeratedDistribution<>(weights);
+        return distribution.sample().getDisplayName();
     }
 
     public static String generateRandomString() {

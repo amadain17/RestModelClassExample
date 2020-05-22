@@ -1,5 +1,6 @@
 package ie.devine.examples;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ie.devine.examples.models.DataModel;
 import ie.devine.examples.models.HeadersModel;
@@ -23,7 +24,8 @@ public class LombokDemoTest {
         DataModel dataFromModel = DataModel.builder().build();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, String> headersFromModel = objectMapper.convertValue(HeadersModel.builder().build(), Map.class);
+        Map<String, String> headersFromModel = objectMapper.convertValue(HeadersModel.builder().build(), new TypeReference<Map<String, String>>() {
+        });
 
         Response response = sendPostRequest(dataFromModel, Collections.unmodifiableMap(headersFromModel));
 
@@ -38,13 +40,14 @@ public class LombokDemoTest {
             DataModel dataFromModel = DataModel.builder().build();
             Response response = sendPostRequest(
                     dataFromModel,
-                    new ObjectMapper().convertValue(HeadersModel.builder().build(), Map.class));
+                    new ObjectMapper().convertValue(HeadersModel.builder().build(), new TypeReference<Map<String, Object>>() {
+                    }));
             String id = response.getBody().jsonPath().get("data.id");
             assertThat(id).isEqualTo(dataFromModel.getId());
         });
     }
 
-    private Response sendPostRequest(DataModel requestBody, Map<String, String> headers) {
+    private Response sendPostRequest(DataModel requestBody, Map<String, Object> headers) {
         return RestAssured.given().log().all()
                 .when()
                 .headers(headers)
