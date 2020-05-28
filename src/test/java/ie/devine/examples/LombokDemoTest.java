@@ -32,6 +32,7 @@ public class LombokDemoTest {
     @BeforeAll
     public static void setUp() {
         reqSpec = new RequestSpecBuilder()
+                .setRelaxedHTTPSValidation()
                 .addFilters(Arrays.asList(new RequestLoggingFilter(), new ResponseLoggingFilter()))
                 .setBaseUri(BASE_URL)
                 .build();
