@@ -1,11 +1,10 @@
 # examples
 
-Examples of using model classes to generate REST requests and verify the responses.
-Rest-assured is used to provide fluent REST requests.
-Lombok is used to cut down the boilerplate code in the model classes.
+Examples of using model classes to generate REST requests bodies with the help of Lombok.
+Rest-assured is used to for the sending requests and validating response.
 Request examples are in both XML and JSON. Jackson libraries are used to generate both the XML, and the JSON bodies.
 
-This approach is recommended for constructing REST request bodies for POST and PUT REST requests as it is:
+This approach is recommended for constructing REST request bodies for POST, PUT and PATCH REST requests as it is:
 * Easy to write, maintain and extend
 * Readable
 * Flexible (headers and bodies can be built to create both positive and negative testing of endpoints)

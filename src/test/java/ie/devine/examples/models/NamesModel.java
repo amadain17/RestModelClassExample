@@ -15,14 +15,16 @@ import static ie.devine.examples.helpers.Randomizers.generateRandomString;
 @Builder
 @JsonDeserialize(builder = NamesModel.NamesModelBuilder.class)
 public class NamesModel {
+
     @JsonProperty
     @Builder.Default
     String name = generateRandomString();
+
     @JsonProperty
     @Builder.Default
     List<String> positions = Arrays.asList("boss", "manager", "grunt");
+
     @JsonProperty
     @Builder.Default
     String city = generateRandomCity();
-
 }

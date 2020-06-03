@@ -22,12 +22,17 @@ import static java.util.UUID.randomUUID;
 @JsonDeserialize(builder = DataModel.DataModelBuilder.class)
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DataModel {
+
     @XmlAttribute
     @JsonProperty
-    @Builder.Default String id = randomUUID().toString();
-    @JsonProperty
-    @Builder.Default String position = randomUUID().toString();
-    @JsonProperty
-    @Builder.Default List<NamesModel> names = Arrays.asList(NamesModel.builder().build(), NamesModel.builder().build());
+    @Builder.Default
+    String id = randomUUID().toString();
 
+    @JsonProperty
+    @Builder.Default
+    String position = randomUUID().toString();
+
+    @JsonProperty
+    @Builder.Default
+    List<NamesModel> names = Arrays.asList(NamesModel.builder().build(), NamesModel.builder().build());
 }

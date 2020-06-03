@@ -14,12 +14,12 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import java.io.StringWriter;
-import java.util.Collections;
 import java.util.Map;
 
-import static ie.devine.examples.helpers.RestRequests.sendPostRequest;
+import static io.restassured.RestAssured.given;
 import static java.lang.Boolean.TRUE;
 import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.TEXT_XML_VALUE;
 
@@ -29,16 +29,17 @@ public class RestDataXmlAT extends RestDataBase {
     public void generateXmlRequestBody() {
         DataModel dataFromModel = DataModel.builder().build();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, String> headersFromModel = objectMapper.convertValue(HeadersModel.builder()
+        Map<String, String> headersFromModel = new ObjectMapper().convertValue(HeadersModel.builder()
                 .contentType(TEXT_XML_VALUE)
                 .accept(TEXT_XML_VALUE).build(), new TypeReference<Map<String, String>>() {
         });
 
         String requestBody = getXmlBodyForRequest(dataFromModel);
-        Response response = sendPostRequest(requestSpecification, requestBody, Collections.unmodifiableMap(headersFromModel));
-        String xmlPart = response.getBody().jsonPath().get(RESPONSE_DATA_FIELD);
+        Response response = given().spec(requestSpecification).basePath(BASE_PATH)
+                .when().headers(headersFromModel).body(requestBody).post()
+                .then().statusCode(SC_OK).extract().response();
 
+        String xmlPart = response.getBody().jsonPath().get(RESPONSE_DATA_FIELD);
         XmlPath xmlPath = new XmlPath(xmlPart);
         assertThat(xmlPath.get(XML_BASE + ".@id").toString()).isEqualTo(dataFromModel.getId());
         assertThat(xmlPath.get(XML_BASE + ".position").toString()).isEqualTo(dataFromModel.getPosition());
@@ -59,5 +60,4 @@ public class RestDataXmlAT extends RestDataBase {
         jaxbMarshaller.marshal(root, sw);
         return sw.toString();
     }
-
 }
