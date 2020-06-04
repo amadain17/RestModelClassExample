@@ -21,7 +21,7 @@ From the root of the project after cloning run:
 From the root of the project after cloning run:
 
     mvn -Dtest=[TESTNAME] test
-    eg. mvn -Dtest=RestDataXmlAT test
+    eg. mvn -Dtest=RestDataXmlTest test
 
 ###### Supporting White-paper on this project:
 https://docs.google.com/document/d/1SGgHTsIpgRLojipsI5eYGVv5SCgYi49N-8ySw3g1j0o/edit?usp=sharing
