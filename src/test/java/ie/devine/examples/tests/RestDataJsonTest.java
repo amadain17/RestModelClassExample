@@ -15,7 +15,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-public class RestDataJsonAT extends RestDataBase {
+public class RestDataJsonTest extends RestDataBase {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

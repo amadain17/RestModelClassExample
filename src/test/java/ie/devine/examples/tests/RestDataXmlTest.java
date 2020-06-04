@@ -23,7 +23,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.TEXT_XML_VALUE;
 
-public class RestDataXmlAT extends RestDataBase {
+public class RestDataXmlTest extends RestDataBase {
 
     @Test
     public void generateXmlRequestBody() {
