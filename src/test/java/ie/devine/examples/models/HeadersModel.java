@@ -16,17 +16,26 @@ import static ie.devine.examples.helpers.Randomizers.generateRandomString;
 @Data
 @JsonDeserialize(builder = HeadersModel.HeadersModelBuilder.class)
 public class HeadersModel {
+
     @JsonProperty("Content-Type")
-    @Builder.Default String contentType = ContentType.JSON.toString();
+    @Builder.Default
+    String contentType = ContentType.JSON.toString();
+
     @JsonProperty("X-Header")
-    @Builder.Default String xheader = UUID.randomUUID().toString();
+    @Builder.Default
+    String xheader = UUID.randomUUID().toString();
+
     @JsonProperty("Authorization")
-    @Builder.Default String authorization = getBasicAuthorizationHeader();
+    @Builder.Default
+    String authorization = getBasicAuthorizationHeader();
+
+    @JsonProperty("Accept")
+    @Builder.Default
+    String accept = ContentType.ANY.toString();
 
     private static String getBasicAuthorizationHeader() {
         String auth = generateRandomString() + ":" + generateRandomString();
-        byte[] encodedAuth = Base64.encodeBase64(
-                auth.getBytes(StandardCharsets.ISO_8859_1));
+        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
         return "Basic " + new String(encodedAuth);
     }
 }
