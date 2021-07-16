@@ -4,6 +4,8 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Arrays;
@@ -21,6 +23,12 @@ public class RestDataBase {
 
     @BeforeAll
     public static void setUp() {
+        Set<String> artifactoryLoggers = new HashSet<>(Arrays.asList("org.apache.http", "groovyx.net.http", "io.restassured.internal"));
+        for(String log:artifactoryLoggers) {
+            ch.qos.logback.classic.Logger artLogger = (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(log);
+            artLogger.setLevel(ch.qos.logback.classic.Level.INFO);
+            artLogger.setAdditive(false);
+        }
         requestSpecification = new RequestSpecBuilder()
                 .setRelaxedHTTPSValidation()
                 .addFilters(Arrays.asList(new RequestLoggingFilter(), new ResponseLoggingFilter()))
