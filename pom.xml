@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<rest-assured.version>3.3.0</rest-assured.version>
-		<apache-commons.version>3.10</apache-commons.version>
+		<apache-commons.version>3.18.0</apache-commons.version>
 		<commons-math3.version>3.6.1</commons-math3.version>
 		<maven-surefire.version>3.0.0-M4</maven-surefire.version>
 	</properties>
